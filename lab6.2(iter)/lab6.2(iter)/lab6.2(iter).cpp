@@ -16,7 +16,7 @@ void PrintArray(int* a, int size);
 int main() {
 	srand((unsigned)time(NULL));
 
-	int* a, n, max;
+	int* a, n, index = -1;
 	cout << "Enter n: "; cin >> n;
 
 	a = new int[n];
@@ -24,9 +24,9 @@ int main() {
 	cout << "\nArray: ";
 	PrintArray(a, n);
 
-	max = MaxOddElement(a, n);
-	if (max != 0)
-		cout << "\nMax odd element: " << max << endl;
+	index = MaxOddElement(a, n);
+	if (index != -1)
+		cout << "\nMax odd element: " << a[index] << endl;
 	else
 		cout << "\nThere is no odd element in array.\n";
 
@@ -41,21 +41,26 @@ int* ArrayBuilder(int* a, int size) {
 }
 
 int MaxOddElement(int* a, int size) {
-	int max = 0;
+	int index = -1,
+		max = 0;
 	for (int i = 0; i < size; i++) {
 		if (a[i] % 2 == 1) {
 			max = a[i];
+			index = i;
 			break;
 		}
 	}
 
-	if (max != 0) {
+	if (index != -1) {
 		for (int i = 0; i < size; i++) {
-			if (a[i] % 2 == 1 && a[i] > max) max = a[i];
+			if (a[i] % 2 != 0 && a[i] > max) {
+				max = a[i];
+				index = i;
+			}
 		}
 	}
 
-	return max;
+	return index;
 }
 
 void PrintArray(int* a, int size) {
